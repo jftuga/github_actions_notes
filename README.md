@@ -10,6 +10,8 @@ My personal notes about Github Actions
 * * * The contents of the `run` action have been saved to this file by Github Actions.
 
 ## Action Shell
+* A [list of all Github Action shells](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell), including supported platforms
+
 * You can use a different shell for the `run` action:
 
 ```yaml
@@ -20,7 +22,18 @@ My personal notes about Github Actions
         shell: python
 ```
 
-* A [list of all Github Action shells](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell), including supported platforms
+* You can use both `powershell` and `bash` under Windows:
+
+```yaml
+  run-windows-commands:
+    runs-on: windows-latest
+    steps:
+      - name: Directory PowerShell
+        run: Get-Location
+      - name: Directory Bash
+        run: pwd
+        shell: bash
+```
 
 ## Debug
 * [If the workflow logs do not provide enough detail to diagnose why a workflow, job, or step is not working as expected, you can enable additional debug logging.](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
