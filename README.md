@@ -7,7 +7,20 @@ My personal notes about Github Actions
 * * The `-e` is similar to `set -e` - meaning the script will abort when any commands return a non-zero exit code.
 * * `{0}` refers to an auto-generated shell script such as:
 * * *  `/home/runner/work/_temp/a894e763-fea0-48ac-ba15-92e8eda24f4d.sh`
-* * * The contents of the `run` script have been saved to this file by Github Actions.
+* * * The contents of the `run` action have been saved to this file by Github Actions.
+
+## Action Shell
+* You can use a different shell for the `run` action:
+
+```yaml
+      - name: python command
+        run: |
+          import platform
+          print(platform.processor())
+        shell: python
+```
+
+* A [list of all Github Action shells](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell), including supported platforms
 
 ## Debug
 * [If the workflow logs do not provide enough detail to diagnose why a workflow, job, or step is not working as expected, you can enable additional debug logging.](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
