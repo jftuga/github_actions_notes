@@ -17,5 +17,6 @@ My personal notes about Github Actions
 ![Github Actions Debug Output](github_actions_debug_output.png)
 
 * You can download the `log archive`:
+* * If you have `ACTIONS_RUNNER_DEBUG` and `ACTIONS_STEP_DEBUG` set to `true`, then your downloaded `log.zip` file will contain an additional folder: `runner-diagnostic-logs`
 
 ![Github Actions Debug Download Log Archive](github_actions_debug_download_log_archive.png)
