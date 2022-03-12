@@ -35,6 +35,13 @@ My personal notes about Github Actions
         shell: bash
 ```
 
+## Job Dependencies
+
+* Jobs will run in parallel by default.
+* By using `needs` in a step, you can make it depend on a previous step, thus making Github Actions run in serial instead of parallel
+
+![Github_Actions_Run_Needs_Depend](github_actions_run_needs_depend.png)
+
 ## Debug
 * [If the workflow logs do not provide enough detail to diagnose why a workflow, job, or step is not working as expected, you can enable additional debug logging.](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
 
