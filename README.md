@@ -36,9 +36,9 @@ My personal notes about Github Actions
 ```
 
 ## Uses
-This can be used to run a 3rd party Github Action with the `uses:` keyword
+`uses:` is used to run a third-party Github Action.
 
-Examples:
+**Examples:**
 
 * `actions/hello-world-javascript-action@v1`
 * `actions/hello-world-javascript-action@master`
@@ -52,7 +52,7 @@ The `with:` keyword provides an input to a `uses` actions:
 `Outputs` can also be obtained by giving your `with` input an `id:` and then referencing it with a GitHub Action generated macro:
 
 * `${{ steps.id_name.outputs.output_name }}`
-* * `id_name` is defined in the input step 
+* * `id_name` is defined in the input step by using `id:`
 * * `output_name` is a predefined output from the included Github Action itself
 * * * This name will be found in the documentation of the imported action
 
