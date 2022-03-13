@@ -80,6 +80,24 @@ Github provides an action to do this: https://github.com/actions/checkout
       uses: actions/checkout@v1
 ```
 
+**Alternative:** *Not recommended - just proof of concept!* Instead of using `actions/checkout`, you could run these commands instead.  However, this example demonstrates the use of the built-in `GITHUB_*` environment variables.
+
+```yaml
+    steps:
+      - name: List Files
+        run: |
+          pwd
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}"
+          git clone https://github.com/$GITHUB_REPOSITORY
+          cd *
+          pwd
+          git checkout $GITHUB_SHA
+          ls -la
+          md5sum *.md
+```
 ___
 
 ## Debug
