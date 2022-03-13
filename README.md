@@ -35,6 +35,13 @@ My personal notes about Github Actions
         shell: bash
 ```
 
+## Job Dependencies
+
+* Jobs will run in parallel by default.
+* By using `needs` in a step, you can make it depend on a previous step, thus making Github Actions run in serial instead of parallel
+
+![Github_Actions_Run_Needs_Depend](github_actions_run_needs_depend.png)
+
 ## Uses
 `uses:` is used to run a third-party Github Action.
 
@@ -60,12 +67,7 @@ The `with:` keyword provides an input to a `uses` actions:
 
 ![Uses Input and Output with ID](github_actions_uses_input_output_with_id.png)
 
-## Job Dependencies
-
-* Jobs will run in parallel by default.
-* By using `needs` in a step, you can make it depend on a previous step, thus making Github Actions run in serial instead of parallel
-
-![Github_Actions_Run_Needs_Depend](github_actions_run_needs_depend.png)
+___
 
 ## Debug
 * [If the workflow logs do not provide enough detail to diagnose why a workflow, job, or step is not working as expected, you can enable additional debug logging.](https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging)
