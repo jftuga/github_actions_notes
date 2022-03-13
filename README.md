@@ -99,6 +99,43 @@ Github provides an action to do this: https://github.com/actions/checkout
           md5sum *.md
 ```
 
+## pull_request
+
+You can run actions when a `PR` occurs by adding `pull_request` to `on:`
+
+```yaml
+name: Actions Workflow
+on: [push, pull_request]
+```
+
+![Github Actions On Pull Request](github_actions_on_pull_request.png)
+
+* By default, including `pull_request` only runs on these *activity types*: `opened`, `reopened`, and `synchronize`, but **not not on** `closed`.
+* To trigger workflows by different activity types, use the `types` keyword:
+
+```yaml
+on:
+  pull_request:
+    types: [review_requested]
+jobs:
+  specific_review_requested:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.requested_team.name == 'dev-team'}}
+    steps:
+      - run: echo 'A review from dev-team was requested'
+```
+
+* If you use `actions/checkout`, when code is pushed, the action will run on any branch because a branch name is not specified under `on:`
+* * `$GITHUB_REF` is the branch that triggered the action
+* OTOH, when a pull_request occurs, then:
+* * `$GITHUB_REF` is the PR merge branch: `refs/pull/:prNumber/merge`
+
+![Github Actions On Pull Request 2](github_actions_on_pull_request_2.png)
+
+* See also: [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
+
+
+
 ___
 
 # Marketplace
