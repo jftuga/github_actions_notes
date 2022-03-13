@@ -67,6 +67,19 @@ The `with:` keyword provides an input to a `uses` actions:
 
 ![Uses Input and Output with ID](github_actions_uses_input_output_with_id.png)
 
+## Checkout Action
+
+By default, Github Actions does not clone your repository into the Github Actions virtual machine.
+
+Github provides an action to do this: https://github.com/actions/checkout
+
+**Example:**
+
+```yaml
+    - name: Checkout
+      uses: actions/checkout@v1
+```
+
 ___
 
 ## Debug
