@@ -49,6 +49,8 @@ The `with:` keyword provides an input to a `uses` actions:
 
 ![Uses Input](github_actions_uses_input.png)
 
+* Note that `uses:` references a Github project: https://github.com/actions/hello-world-javascript-action
+
 `Outputs` can also be obtained by giving your `with` input an `id:` and then referencing it with a GitHub Action generated macro:
 
 * `${{ steps.id_name.outputs.output_name }}`
