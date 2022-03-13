@@ -98,6 +98,13 @@ Github provides an action to do this: https://github.com/actions/checkout
           ls -la
           md5sum *.md
 ```
+
+___
+
+# Marketplace
+
+[Github Actions Marketplace](https://github.com/marketplace?type=actions)
+
 ___
 
 ## Debug
