@@ -7,12 +7,12 @@ My personal notes about Github Actions
 * * The `-e` is similar to `set -e` - meaning the script will abort when any commands return a non-zero exit code.
 * * `{0}` refers to an auto-generated shell script such as:
 * * *  `/home/runner/work/_temp/a894e763-fea0-48ac-ba15-92e8eda24f4d.sh`
-* * * The contents of the `run` action have been saved to this file by Github Actions.
+* * * The contents of the `run` command have been saved to this file by Github Actions.
 
 ## Action Shell
 * A [list of all Github Action shells](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell), including supported platforms
 
-* You can use a different shell for the `run` action:
+* You can use a different shell for the `run` command:
 
 ```yaml
       - name: python command
@@ -34,6 +34,29 @@ My personal notes about Github Actions
         run: pwd
         shell: bash
 ```
+
+## Uses
+This can be used to run a 3rd party Github Action with the `uses:` keyword
+
+Examples:
+
+* `actions/hello-world-javascript-action@v1`
+* `actions/hello-world-javascript-action@master`
+* `actions/hello-world-javascript-action@3ee2a0320c9193ab716b86a9dae253f5c16bae62`
+* * After the `@` symbol, a `branch name`, `tag` or `commit` must be referenced.
+
+The `with:` keyword provides an input to a `uses` actions:
+
+![Uses Input](github_actions_uses_input.png)
+
+`Outputs` can also be obtained by giving your `with` input an `id:` and then referencing it with a GitHub Action generated macro:
+
+* `${{ steps.id_name.outputs.output_name }}`
+* * `id_name` is defined in the input step 
+* * `output_name` is a predefined output from the included Github Action itself
+* * * This name will be found in the documentation of the imported action
+
+![Uses Input and Output with ID](github_actions_uses_input_output_with_id.png)
 
 ## Job Dependencies
 
