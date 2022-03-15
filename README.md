@@ -230,13 +230,13 @@ on:
       - 'feature/*'
 ```
 
-The above would **not** match `feature/abc/xyz` as the `*` does not match `/`. It has to be one word.  Otherwise, you will need to use: `- feature/**` to match nested slashes.
+The above would **not** match `feature/abc/xyz` as the `*` does not match a `/`. It has to be one word.  Otherwise, you will need to use: `- 'feature/**'` to match nested slashes.
 
 See also: [Filter pattern cheat sheet](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet)
 
 **Negation / Exclusions**
 
-Use `branches ignore` to run on **all** branches except for those listed.
+Use `branches-ignore` to run on **all** branches except for those listed:
 
 ```yml
 on:
@@ -245,9 +245,9 @@ on:
       - main
 ```
 
-You can **not** use both `branches:` and `branches-ignore:` simultaneously. To overcome this limitation by using `!` with `branches:`.
+You can **not** use both `branches:` and `branches-ignore:` simultaneously. To overcome this limitation, use a `!` within `branches`.
 
-This will ignore the `featC` branch but still work on all other `feature` branches.  The negation entry **must come last** in the list.
+This will ignore the `featC` branch but still work on all other `feature` branches.  The negation entry **must come last** in the list:
 
 ```yml
 on:
@@ -274,7 +274,7 @@ on:
 
 **paths**
 
-For example, only run the workflow when Javascript files have been pushed:
+For example, only run the workflow when Javascript files have been pushed, except for `filename.js`:
 
 ```yml
 on:
@@ -289,7 +289,7 @@ on:
     - '!filename.js'
 ```
 
-Note that you can use `paths-ignore` but not at the same time that you use `paths`:
+You can also use `paths-ignore` but not at the same time that you use `paths`:
 
 ```yml
    paths-ignore:
