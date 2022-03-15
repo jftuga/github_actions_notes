@@ -134,11 +134,174 @@ jobs:
 
 * See also: [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows)
 
+## Schedule
+
+You can use a *cron schedule expression* to schedule GitHub Actions.
+* See also: [Create a repository dispatch event](https://docs.github.com/en/rest/reference/repos#create-a-repository-dispatch-event)
+
+
+```yaml
+on:
+  schedule:
+    # run at 12 PM each day
+    - cron: "0 12 * * *"
+    # at 04:30 on every 2nd day-of-month
+    - cron: "30 4 */2 * *"
+```
+
+* The **minimum time** is every 5 minutes.
+* See also: [Crontab Guru](https://crontab.guru/)
+
+___
+
+## repository_dispatch
+
+This event can be manually triggered by sending a POST request.  A `GitHub Token` is required in order to authorize the POST request.
+
+* Settings -> Developer Settings -> Personal Access Tokens
+* Generate new token
+* Scope: `repo` checkbox for all 4 sub-repo permissions
+
+
+The POST request URL is:
+* https://api.github.com/repos/USERNAME/YOUR-REPO/dispatches
+* Authorization:
+* * Basic Auth with newly generated token
+* Required Headers:
+* * Key: `Accept`
+* * Value: `application/vnd.github.v3+json`
+* * Key: `Content-Type`
+* * Value: `application/json`
+* Body:
+* * send raw JSON
+* Example:
+
+```json
+{
+  "event_type": "whatever_you_like (such as 'build')"
+  "client_payload": {
+    "env": "production",
+    "example_unit": false,
+    "example_integration": true
+  }
+}
+```
+
+actions.yml:
+```yml
+repository_dispatch:
+  # this match "event_type" in the JSON listed above
+  types: [build]
+```
+
+In The `actions.yml` the `client_payload` will be available in the `github` object:
+
+![Github Actions Repository Dispatch Client Payload](github_actions_repository_dispatch_client_payload.png)
+
+___
+
+## Filtering Workflows by Branches, Tags, and Paths
+
+Only run workflow when pushing to main:
+
+```yml
+on:
+  push:
+    branches:
+      - main
+```
+
+Only run workflow if a PR is requesting to merge with main:
+
+```yml
+on:
+  pull_request:
+    branches:
+      - main
+```
+
+Branches can also be pattern based:
+
+```yml
+on:
+  push:
+    branches:
+      - main
+      - 'feature/*'
+```
+
+The above would **not** match `feature/abc/xyz` as the `*` does not match `/`. It has to be one word.  Otherwise, you will need to use: `- feature/**` to match nested slashes.
+
+See also: [Filter pattern cheat sheet](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet)
+
+**Negation / Exclusions**
+
+Use `branches ignore` to run on **all** branches except for those listed.
+
+```yml
+on:
+  push:
+    branches-ignore:
+      - main
+```
+
+You can **not** use both `branches:` and `branches-ignore:` simultaneously. To overcome this limitation by using `!` with `branches:`.
+
+This will ignore the `featC` branch but still work on all other `feature` branches.  The negation entry **must come last** in the list.
+
+```yml
+on:
+  push:
+    branches-ignore:
+      - main
+      - 'feature/**'
+      - '!feature/featC'
+```
+
+**tags**
+
+These work exactly like `branches`, including `tags-ignore`:
+
+```yml
+on:
+  push:
+    branches:
+      - master
+      - 'feature/**'
+  tags:
+    - v1.*
+```
+
+**paths**
+
+For example, only run the workflow when Javascript files have been pushed:
+
+```yml
+on:
+  push:
+    branches:
+      - master
+      - 'feature/**'
+  tags:
+    - v1.*
+  paths:
+    - '**.js'
+    - '!filename.js'
+```
+
+Note that you can use `paths-ignore` but not at the same time that you use `paths`:
+
+```yml
+   paths-ignore:
+     - 'docs/**'
+```
+
+
 
 
 ___
 
-# Marketplace
+## Marketplace
 
 [Github Actions Marketplace](https://github.com/marketplace?type=actions)
 
