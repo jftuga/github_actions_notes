@@ -296,6 +296,90 @@ You can also use `paths-ignore` but not at the same time that you use `paths`:
      - 'docs/**'
 ```
 
+___
+
+## Default & Custom Environment Variables
+
+You can define `global` environment variables using `env:`, *(see WF_ENV):*
+
+```yml
+on: push
+env:
+  WF_ENV: Available to all jobs
+
+jobs:
+  log-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log ENV Variables
+        run: |
+          echo "WF_ENV: ${WF_ENV}"
+```
+
+You can also create environment variables that can only be accessed from a specific job by placing `env:` within a single job, *(see JOB_ENV)*:
+
+```yml
+on: push
+env:
+  WF_ENV: Available to all jobs
+
+jobs:
+  log-env:
+    runs-on: ubuntu-latest
+    env:
+      JOB_ENV: Available only to all jobs in log-env job
+    steps:
+      - name: Log ENV Variables
+        run: |
+          echo "WF_ENV: ${WF_ENV}"
+          echo "JOB_ENV: ${JOB_ENV}"
+```
+
+You can do the same for only one `step` by placing `env:` within a certain `step`:
+
+```yml
+steps:
+  - name: Log ENV Variables
+    env:
+      STEP_ENV: Available to only this step
+    run: |
+      echo "WF_ENV: ${WF_ENV}"
+      echo "JOB_ENV: ${JOB_ENV}"
+      echo "STEP_ENV: ${STEP_ENV}"
+```
+
+**All Github Environment Variables**
+* See also: [Default environment variables](https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables)
+
+**Useful Default GitHub Environment Variables**:
+
+![Github Actions Default Environment Variables](github_actions_default_environment_variables.png)
+
+**Example Output**:
+
+![Github Actions Default Environment Variables Output](github_actions_default_environment_variables_output.png)
+
+___
+
+## Encrypting Environment Variables
+
+Secrets can only be accessed and decrypted on Github.
+
+* Settings -> Secrets
+* Add a new secret
+* * Name: WF_ENV
+* * Value: *(add you secret here)*
+* Click `Add Secret`
+
+```yml
+on: push
+env:
+  WF_ENV: ${{ secrets.WF_ENV }}
+```
+
+## Using GITHUB_TOKEN Secret for Authentication
+
+`${{ secrets.GITHUB_TOKEN }}` is a built-in secret that can be used by the Github API.  For example, it can be used to push code to your repo.
 
 
 
