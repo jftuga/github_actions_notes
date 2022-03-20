@@ -379,7 +379,63 @@ env:
 
 ## Using GITHUB_TOKEN Secret for Authentication
 
-`${{ secrets.GITHUB_TOKEN }}` is a built-in secret that can be used by the Github API.  For example, it can be used to push code to your repo.
+`${{ secrets.GITHUB_TOKEN }}` is a built-in secret that can be used by the Github API.  For example, it can be used to push code to your repo.  It can also be used to call the GitHub REST API from within your workflow.
+
+**Example 1: passing GITHUB_TOKEN as an input**
+
+```yml
+name: Pull request labeler
+on: [ pull_request_target ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+**Example 2: call the the REST API**
+
+Points of interest:
+* use of: `github.repository`
+* use of: `secrets.GITHUB_TOKEN`
+* use of: `github.workflow`
+
+```yml
+name: Create issue on commit
+
+on: [ push ]
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{ github.repository }}/issues \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          --data '{
+            "title": "Automated issue for commit: ${{ github.sha }}",
+            "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+            }' \
+          --fail
+```
+
+Live Demo: [random_number.yml](https://github.com/jftuga/github-actions-test/blob/master/.github/workflows/random_number.yml)
+
+Reference: [Automatic token authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication)
+
+___
 
 
 
