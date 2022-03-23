@@ -476,8 +476,20 @@ A few of the Github built-in `contexts` include:
 * secrets
 * * Ex: secrets.PASSPHRASE
 
-Reference: [All GitHub Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+* Reference: [All GitHub Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
+* Reference [All Github Functions](https://docs.github.com/en/actions/learn-github-actions/expressions#functions)
+* * Partial list of available functions:
+* * * contains
+* * * startsWith
+* * * format
+* * * toJSON
+* * * fromJSON
 
+**Example:**
+
+![Github Actions Functions](github_actions_functions.png)
+
+![Github Actions Functions Output](github_actions_functions_output.png)
 ___
 
 ## Marketplace
