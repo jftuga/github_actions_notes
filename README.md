@@ -437,7 +437,46 @@ Reference: [Automatic token authentication](https://docs.github.com/en/actions/s
 
 ___
 
+## Encrypting & Decrypting Files
 
+Github secrets can have a max size of `64 KB`.
+
+Workaround: You can push an encrypted file to your repo and then decrypt it in your workflow.
+
+Reference: [Limits for secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#limits-for-secrets)
+
+Encrypt a file on a local machine:
+
+```shell
+gpg --symmetric --cipher-algo AES256 my_secret.json
+```
+
+**TODO:** Complete this section
+
+___
+
+## Expressions & Contexts
+
+Anything in between `${{ }}` is an expressions that gets *evaluated*.
+
+Examples:
+* ${{ 42 }}
+* ${{ true }}
+* ${{ 'some string' }}
+* ${{ 3.1415926 }}
+* ${{ 'abc' == 'abcde' }}
+* ${{ 1 > 5 }}
+* ${{ *function* }}
+
+Objects inside the braces is called a `Context`.  Contexts are a way to access information about workflow runs, runner environments, jobs, and steps. Each context is an object that contains properties, which can be strings or other objects.
+
+A few of the Github built-in `contexts` include:
+* github
+* * Ex: github.token
+* secrets
+* * Ex: secrets.PASSPHRASE
+
+Reference: [All GitHub Contexts](https://docs.github.com/en/actions/learn-github-actions/contexts)
 
 ___
 
