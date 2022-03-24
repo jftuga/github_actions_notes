@@ -492,6 +492,35 @@ A few of the Github built-in `contexts` include:
 ![Github Actions Functions Output](github_actions_functions_output.png)
 ___
 
+## The If key & Job Status Check Functions
+
+**if**
+
+* You can use the `if` conditional to prevent a job from running unless a condition is met.
+* You can use any supported context and expression to create a conditional.
+* Expressions inside an `if` conditional **do not** require the `${{ }}` syntax.
+* These can be used in both `jobs` and `steps`.
+
+**Example:**
+
+![Github Actions If Condition](github_actions_if_condition.png)
+
+You can use `failure()` to continue the next `step` even if the previous one fails.
+
+**Example:**
+
+![Github Actions If Condition Failure](github_actions_if_condition_failure.png)
+
+Other functions than can be used with `if`:
+* success()
+* cancelled() *return true when workflow is cancelled*
+* always() - *always returns true*
+___
+
+## Continue on Error & Timeout Minutes
+
+___
+
 ## Marketplace
 
 [Github Actions Marketplace](https://github.com/marketplace?type=actions)
