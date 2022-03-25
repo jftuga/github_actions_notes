@@ -519,6 +519,56 @@ ___
 
 ## Continue on Error & Timeout Minutes
 
+You can use `needs:` in jobs if you do not want them to run in parallel and run them in a certain sequence.
+`needs:` is an array so you can depend on multiple jobs.
+
+You can set `continue-on-error:` to `true` in the first step to run all successive steps without having to add `if failure()` to each one of those steps.
+
+
+`timeout-minutes` *(default is 360 minutes)* - can be step to change the maximum time a job can take. This can also be used in a `step`.
+
+## Using Matrix for Running Job with Different Environments
+
+![Github Actions Strategy Matrix](github_actions_strategy_matrix.png)
+
+* create an array that will be used in the steps
+* * `node_version:` in the example above
+* `max-parallel:` can be used to limit number of parallel jobs
+* * GitHub maximizes this by default
+* Set `fail-fast:` to `false` to abort parallel jobs if one of them fails
+* Use the `matrix context` to reference the *node_version* object
+
+**Example:**
+
+![Github Actions Strategy Matrix 3x3](github_actions_strategy_matrix_3x3.png)
+
+
+___
+
+## Including & Excluding Matrix Configurations
+
+To exclude individual matrix combinations, use `exclude:`
+
+**Example:**
+
+![Github Actions Strategy Matrix Exclude](github_actions_strategy_matrix_exclude.png)
+
+`include:` includes extra variables for a certain configuration that already exists in the matrix.
+
+**Example:**
+
+![Github Actions Strategy Matrix Include](github_actions_strategy_matrix_include.png)
+
+**Usage:**
+
+`IS_UBUNTU_8` is set to `true` only in one configuration; otherwise, it is set to an *empty string*:
+
+![Github Actions Strategy Matrix Include Usage](github_actions_strategy_matrix_include_usage.png)
+___
+
+## Using Docker Containers in Jobs
+
+
 ___
 
 ## Marketplace
