@@ -568,6 +568,49 @@ ___
 
 ## Using Docker Containers in Jobs
 
+To use Docker, use `container`. This can be any image from DockerHub.
+
+**Example:**
+
+```yml
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: node:13.5.0-alpine3.10
+      env:
+        NAME: PROD
+      ports: [22, 443]
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpu 1
+```
+
+When you only specify a container image, you can omit the `image` keyword:
+
+```yml
+jobs:
+  my_job:
+    container: node:14.16
+```
+
+**Complete Example:**
+
+```yml
+name: container
+on: push
+
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: node:13.5.0-alpine3.10
+    steps:
+      - name: log node version
+        run: |
+          node -v
+          cat /etc/os-release
+```
 
 ___
 
